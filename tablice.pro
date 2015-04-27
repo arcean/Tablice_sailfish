@@ -24,7 +24,8 @@ OTHER_FILES += qml/tablice.qml \
     rpm/tablice.spec \
     rpm/tablice.yaml \
     translations/*.ts \
-    tablice.desktop
+    tablice.desktop \
+    qml/pages/MainPage.qml
 
 # to disable building translations every time, comment out the
 # following CONFIG line
