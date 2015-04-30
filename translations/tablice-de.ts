@@ -2,6 +2,33 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>AboutPage</name>
+    <message>
+        <source>O programie</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lista tablic rejestracyjnych</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Version %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tablice to oprogramowanie wydane na licenji</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> GNU General Public License.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Licencja</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CoverPage</name>
     <message>
         <source>My Cover</source>
