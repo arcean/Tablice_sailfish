@@ -42,3 +42,6 @@ TRANSLATIONS += translations/tablice-de.ts
 
 RESOURCES +=
 
+HEADERS += \
+    src/definedValues.h
+
