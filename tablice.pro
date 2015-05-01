@@ -26,7 +26,9 @@ OTHER_FILES += qml/tablice.qml \
     translations/*.ts \
     tablice.desktop \
     qml/pages/MainPage.qml \
-    qml/pages/AboutPage.qml
+    qml/pages/AboutPage.qml \
+    qml/pages/LicensePage.qml \
+    qml/pages/license.js
 
 # to disable building translations every time, comment out the
 # following CONFIG line
@@ -37,4 +39,6 @@ CONFIG += sailfishapp_i18n
 # following TRANSLATIONS line. And also do not forget to
 # modify the localized app name in the the .desktop file.
 TRANSLATIONS += translations/tablice-de.ts
+
+RESOURCES +=
 
