@@ -32,20 +32,59 @@
 #include <QtQuick>
 #endif
 
+#include <QtGlobal>
+#include <QtQml>
+#include <QQmlExtensionPlugin>
+#include <QQuickView>
+#include <QGuiApplication>
 #include <sailfishapp.h>
 
+#include "definedValues.h"
+
+void prepareApplicationInfo(QGuiApplication *sailfishApplication)
+{
+    sailfishApplication->setApplicationVersion(APPLICATION_VERSION);
+    sailfishApplication->setApplicationName(APPLICATION_NAME);
+    sailfishApplication->setApplicationDisplayName(APPLICATION_NAME);
+}
+
+void prepareDomainInfo(QGuiApplication *sailfishApplication)
+{
+    sailfishApplication->setOrganizationName(ORGANIZATION_NAME);
+    sailfishApplication->setOrganizationDomain(ORGANIZATION_DOMAIN);
+}
+
+void prepareSailfishApplication(QGuiApplication *sailfishApplication)
+{
+    prepareApplicationInfo(sailfishApplication);
+    prepareDomainInfo(sailfishApplication);
+}
+
+QUrl prepareUrlToQmlResource(QString resourceName)
+{
+    return SailfishApp::pathTo(QString("qml/%1.qml").arg(resourceName));
+}
+
+void prepareView(QQuickView *quickView)
+{
+    quickView->setSource(prepareUrlToQmlResource(APPLICATION_PROJECT_NAME));
+}
 
 int main(int argc, char *argv[])
 {
-    // SailfishApp::main() will display "qml/template.qml", if you need more
-    // control over initialization, you can use:
-    //
-    //   - SailfishApp::application(int, char *[]) to get the QGuiApplication *
-    //   - SailfishApp::createView() to get a new QQuickView * instance
-    //   - SailfishApp::pathTo(QString) to get a QUrl to a resource file
-    //
-    // To display the view, call "show()" (will show fullscreen on device).
+    int result = 0;
+    QGuiApplication *sailfishApplication = SailfishApp::application(argc, argv);
+    QQuickView *applicationView = SailfishApp::createView();
 
-    return SailfishApp::main(argc, argv);
+    prepareSailfishApplication(sailfishApplication);
+    prepareView(applicationView);
+//    qmlRegisterType<Tablice>(ORGANIZATION_DOMAIN + ".tablice",1,0,"Tablice");
+    applicationView->show();
+    result = sailfishApplication->exec();
+
+    delete applicationView;
+    delete sailfishApplication;
+
+    return result;
 }
 
