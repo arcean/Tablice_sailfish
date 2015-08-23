@@ -33,19 +33,14 @@ QVariant PlateModel::data(const QModelIndex &index, int role) const
 
     switch(role) {
     case NameRole:
-         qDebug() << "returning NameRole " << plate->name();
         return plate->name();
     case CategoryRole:
-        qDebug() << "returning CategoryRole " << plate->category();
         return plate->category();
     case ProvinceRole:
-        qDebug() << "returning ProvinceRole " << plate->province();
         return plate->province();
     case CountyRole:
-        qDebug() << "returning CountyRole " << plate->county();
         return plate->county();
     case CityRole:
-        qDebug() << "returning CityRole " << plate->city();
         return plate->city();
     default:
         return QVariant();
