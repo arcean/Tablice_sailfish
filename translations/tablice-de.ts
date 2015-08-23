@@ -51,6 +51,13 @@
     </message>
 </context>
 <context>
+    <name>LicensePage</name>
+    <message>
+        <source>License</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SecondPage</name>
     <message>
         <source>Nested Page</source>

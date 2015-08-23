@@ -14,7 +14,13 @@ TARGET = tablice
 
 CONFIG += sailfishapp
 
-SOURCES += src/tablice.cpp
+QT += sql
+
+SOURCES += src/tablice.cpp \
+    src/datasource.cpp \
+    src/plate.cpp \
+    src/settings.cpp \
+    src/platemodel.cpp
 
 OTHER_FILES += qml/tablice.qml \
     qml/cover/CoverPage.qml \
@@ -30,6 +36,11 @@ OTHER_FILES += qml/tablice.qml \
     qml/pages/LicensePage.qml \
     qml/pages/license.js
 
+data.files = data/tablice.db.sqlite
+data.path = /usr/share/$${TARGET}/data
+
+INSTALLS += data
+
 # to disable building translations every time, comment out the
 # following CONFIG line
 CONFIG += sailfishapp_i18n
@@ -43,5 +54,9 @@ TRANSLATIONS += translations/tablice-de.ts
 RESOURCES +=
 
 HEADERS += \
-    src/definedValues.h
+    src/definedValues.h \
+    src/datasource.h \
+    src/plate.h \
+    src/settings.h \
+    src/platemodel.h
 

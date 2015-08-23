@@ -39,7 +39,8 @@ Page {
     Component {
         id: listViewComponent
         SilicaListView {
-            model: listModel
+//            model: listModel
+            model: plateModel
             anchors.fill: parent
             currentIndex: -1 // otherwise currentItem will steal focus
             header:  Item {
@@ -51,6 +52,7 @@ Page {
 
             delegate: BackgroundItem {
                 id: backgroundItem
+                height: Theme.itemSizeLarge
 
                 ListView.onAdd: AddAnimation {
                     target: backgroundItem
@@ -60,12 +62,39 @@ Page {
                 }
 
                 Label {
+                    id: delegateNameLabel
                     x: searchField.textLeftMargin
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.top: parent.top
+                    anchors.topMargin: Theme.paddingSmall
                     color: searchString.length > 0 ? (highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor)
                                                    : (highlighted ? Theme.highlightColor : Theme.primaryColor)
                     textFormat: Text.StyledText
-                    text: Theme.highlightText(model.text, searchString, Theme.highlightColor)
+                    text: {
+                        var plate = model.name + "...";
+                        Theme.highlightText(plate , searchString, Theme.highlightColor);
+                    }
+                }
+                Label {
+                    id: delegateProvinceName
+                    x: searchField.textLeftMargin
+                    anchors.top: delegateNameLabel.bottom
+                    color: highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor
+                    font.pixelSize: Theme.fontSizeTiny
+                    textFormat: Text.StyledText
+                    text: {
+                        var province = "Województwo: " + model.province;
+
+                        Theme.highlightText(province , searchString, Theme.highlightColor);
+                    }
+                }
+                Label {
+                    id: delegateCityName
+                    x: searchField.textLeftMargin
+                    anchors.top: delegateProvinceName.bottom
+                    color: highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor
+                    font.pixelSize: Theme.fontSizeTiny
+                    textFormat: Text.StyledText
+                    text: Theme.highlightText(getCityOrCountyName(model), searchString, Theme.highlightColor);
                 }
             }
 
@@ -80,51 +109,18 @@ Page {
         }
     }
 
+    function getCityOrCountyName(model) {
+        if (model.city === "")
+            return "Powiat: " + model.county;
+        return "Miasto: " + model.city;
+    }
+
     ListModel {
         id: listModel
 
         // copied under creative commons license from Wikipedia
         // http://en.wikipedia.org/wiki/List_of_sovereign_states
         property variant countries: ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola",
-            "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria",
-            "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados",
-            "Belarus", "Belgium", "Belize", "Benin", "Bhutan",
-            "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei",
-            "Bulgaria", "Burkina Faso", "Burma", "Burundi", "Cambodia",
-            "Cameroon", "Canada", "Cape Verde", "Central African Republic", "Chad",
-            "Chile", "China", "Colombia", "Comoros", "Costa Rica",
-            "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark",
-            "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador",
-            "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia",
-            "Ethiopia", "Fiji", "Finland", "France", "Gabon",
-            "Gambia", "Georgia", "Germany", "Ghana", "Greece",
-            "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana",
-            "Haiti", "Honduras", "Hungary", "Iceland", "India",
-            "Indonesia", "Iran", "Iraq", "Ireland", "Israel",
-            "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan",
-            "Kenya", "Kiribati", "Korea North", "Korea South", "Kuwait",
-            "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho",
-            "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg",
-            "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives",
-            "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius",
-            "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia",
-            "Montenegro", "Morocco", "Mozambique", "Namibia", "Nauru",
-            "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger",
-            "Nigeria", "Norway", "Oman", "Pakistan", "Palau",
-            "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines",
-            "Poland", "Portugal", "Qatar", "Romania", "Russia",
-            "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa",
-            "San Marino", "Saudi Arabia", "Senegal", "Serbia", "Seychelles",
-            "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands",
-            "Somalia", "South Africa", "South Sudan", "Spain", "Sri Lanka",
-            "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland",
-            "Syria", "Tajikistan", "Tanzania", "Thailand", "Togo",
-            "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan",
-            "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom",
-            "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City",
-            "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe",
-            "Abkhazia", "Cook Islands", "Kosovo", "Nagorno-Karabakh", "Niue",
-            "Northern Cyprus", "Palestine", "SADR", "Somaliland", "South Ossetia",
             "Taiwan"]
 
         function update() {
