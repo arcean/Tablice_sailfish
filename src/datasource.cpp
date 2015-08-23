@@ -19,10 +19,7 @@ void DataSource::openConncetion()
     path.append(QDir::separator()).append("data");
     path.append(QDir::separator()).append("tablice.db.sqlite");
     path = QDir::toNativeSeparators(path);
-    qDebug() << "path to db: " << path;
     db.setDatabaseName(path);
-    QFile file(path);
-    qDebug() << "File exists? " << file.exists();
     db.open();
 }
 

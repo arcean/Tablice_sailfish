@@ -23,7 +23,6 @@ QHash<int, QByteArray> PlateModel::roleNames() const
 
 QVariant PlateModel::data(const QModelIndex &index, int role) const
 {
-    qDebug() << "Data asked for " << index.row() << " and role " << role;
     if (index.row() < 0 || index.row() >= m_list.size()) {
         qCritical() << "QModelIndex is not within list";
         return QVariant();
