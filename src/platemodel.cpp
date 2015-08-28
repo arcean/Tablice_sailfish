@@ -7,6 +7,20 @@ PlateModel::PlateModel(QObject *parent) :
 {
 }
 
+PlateModel::PlateModel(const PlateModel &plateModel):
+    m_list(plateModel.m_list)
+{
+}
+
+PlateModel& PlateModel::operator= (const PlateModel &plateModel)
+{
+    if (this == &plateModel)
+        return *this;
+
+    m_list = plateModel.m_list;
+
+    return *this;
+}
 
 QHash<int, QByteArray> PlateModel::roleNames() const
 {

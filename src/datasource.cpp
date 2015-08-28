@@ -35,6 +35,11 @@ void DataSource::setListModel(PlateModel *model)
     this->model = model;
 }
 
+void DataSource::getFilteredModel(QString filter)
+{
+
+}
+
 void DataSource::createMainTable()
 {
     // FIXME: ERM query, WTF?

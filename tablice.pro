@@ -25,7 +25,8 @@ SOURCES += src/tablice.cpp \
     src/provincequery.cpp \
     src/countyquery.cpp \
     src/cityquery.cpp \
-    src/platecodequery.cpp
+    src/platecodequery.cpp \
+    src/platemodelfactory.cpp
 
 OTHER_FILES += qml/tablice.qml \
     qml/cover/CoverPage.qml \
@@ -68,5 +69,6 @@ HEADERS += \
     src/provincequery.h \
     src/countyquery.h \
     src/cityquery.h \
-    src/platecodequery.h
+    src/platecodequery.h \
+    src/platemodelfactory.h
 

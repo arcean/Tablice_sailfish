@@ -18,6 +18,7 @@
 #include "countyquery.h"
 #include "cityquery.h"
 #include "platecodequery.h"
+#include "platemodelfactory.h"
 
 void prepareApplicationInfo(QGuiApplication *sailfishApplication)
 {
@@ -48,30 +49,6 @@ void prepareView(QQuickView *quickView)
     quickView->setSource(prepareUrlToQmlResource(APPLICATION_PROJECT_NAME));
 }
 
-PlateModel* createPlateModel(DataSource *dataSource)
-{
-    PlateModel *plateModel = new PlateModel();
-    Plate *plate;
-    ProvinceQuery provinceQuery;
-    CountyQuery countyQuery;
-    CityQuery cityQuery;
-    PlateCodeQuery plateCodeQuery;
-
-    int numberOfEntries = dataSource->getNumberOfEntries();
-
-    for (int i = 0; i < numberOfEntries; i++) {
-        const QString city = cityQuery.getDataForId(i);
-        const QString province = provinceQuery.getDataForId(i);
-        const QString county = countyQuery.getDataForId(i);
-        const QString plateCode = plateCodeQuery.getDataForId(i);
-        // FIXME: is category still needed ? Last plateCode is treated as category
-        plate = new Plate(plateCode, city, county, province, plateCode);
-        plateModel->addPlate(*plate);
-    }
-
-    return plateModel;
-}
-
 int main(int argc, char *argv[])
 {
     int result = 0;
@@ -82,8 +59,11 @@ int main(int argc, char *argv[])
     prepareView(applicationView);
     QQmlContext *context = applicationView->rootContext();
     DataSource dataSource;
-    PlateModel *plateModel = createPlateModel(&dataSource);
+    PlateModel *plateModel = PlateModelFactory::createPlateModel(&dataSource);
+    PlateModel *filteredModel = plateModel;
     context->setContextProperty("plateModel", plateModel);
+    context->setContextProperty("filteredModel", filteredModel);
+
 
     applicationView->show();
     result = sailfishApplication->exec();

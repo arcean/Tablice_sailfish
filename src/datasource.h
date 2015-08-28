@@ -31,12 +31,14 @@ public slots:
     void closeConnection();
     int getNumberOfEntries();
     void setListModel(PlateModel *model);
+    void getFilteredModel(QString filter);
     void loadDataToModel();
     void createTemporaryPlates();
 
 private:
     QSqlDatabase *db;
     PlateModel *model;
+    PlateModel *filteredModel;
 };
 
 #endif // DATASOURCE_H
