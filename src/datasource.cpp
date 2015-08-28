@@ -2,6 +2,7 @@
 #include <QDebug>
 
 #include "datasource.h"
+#include "abstractquery.h"
 
 DataSource::DataSource(QObject *parent) :
     QObject(parent) {
@@ -92,80 +93,31 @@ int DataSource::getNumberOfEntries()
     return query.value(0).toInt();
 }
 
-// FIXME: ERM query, WTF?
-QString DataSource::getPlateCodeForId(int id)
-{
-    QSqlQuery query;
-    query.exec(QString("select tableCode from main where id = %1")
-               .arg(id));
-    query.next();
-
-    return query.value(0).toString();
-}
-
-
-/*
- * FIXME: ERM query, WTF?
- * Merge these 3 functions.
- */
-QString DataSource::getProvinceForId(int id)
-{
-    QSqlQuery query;
-    query.exec(QString("select wojewodztwo from details where id = %1")
-               .arg(id));
-    query.next();
-
-    return query.value(0).toString();
-}
-
-// FIXME: ERM query, WTF?
-QString DataSource::getCountyForId(int id)
-{
-    QSqlQuery query;
-    query.exec(QString("select powiat from details where id = %1")
-               .arg(id));
-    query.next();
-
-    return query.value(0).toString();
-}
-
-// FIXME: ERM query, WTF?
-QString DataSource::getCityForId(int id)
-{
-    QSqlQuery query;
-
-    query.exec(QString("select miasto from details where id = %1")
-               .arg(id));
-    query.next();
-
-    return query.value(0).toString();
-}
-
 void DataSource::loadDataToModel()
 {
-    Plate *item;
-    int numberOfEntries = getNumberOfEntries();
+//    Plate *item;
+//    int numberOfEntries = getNumberOfEntries();
 
-    for (int i = 0; i < numberOfEntries; i++) {
-        QString name = getPlateCodeForId(i);
-        item = new Plate(name, getProvinceForId(i));
-        item->setCounty(getCountyForId(i));
-        item->setCity(getCityForId(i));
-        item->setProvince(getProvinceForId(i));
-        // FIXME: WTF?!
-        name.chop(name.length()-1);
+//    for (int i = 0; i < numberOfEntries; i++) {
+//        QString name = getPlateCodeForId(i);
+//        item = new Plate(name, getProvinceForId(i));
+//        item->setCounty(getCountyForId(i));
+//        item->setCity(getCityForId(i));
+//        item->setProvince(getProvinceForId(i));
+//        // FIXME: WTF?!
+//        name.chop(name.length()-1);
 
-        // Military plates
-        if (name.compare("U") == 0)
-            name = QStringLiteral(MILITARY_PLATES_TEXT);
+//        // Military plates
+//        if (name.compare("U") == 0)
+//            name = QStringLiteral(MILITARY_PLATES_TEXT);
 
-        // National services plates.
-        if (name.compare("H") == 0)
-            name = QStringLiteral(NATIONAL_SERVICES_PLATES_TEXT);
+//        // National services plates.
+//        if (name.compare("H") == 0)
+//            name = QStringLiteral(NATIONAL_SERVICES_PLATES_TEXT);
 
-        item->setCategory(name);
-        model->addPlate(*item);
-    }
+//        item->setCategory(name);
+//        model->addPlate(*item);
+//    }
 }
 
 void DataSource::createTemporaryPlates()

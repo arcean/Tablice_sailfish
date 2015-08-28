@@ -30,12 +30,8 @@ public slots:
     void openConncetion();
     void closeConnection();
     int getNumberOfEntries();
-    QString getPlateCodeForId(int id);
     void setListModel(PlateModel *model);
     void loadDataToModel();
-    QString getProvinceForId(int id);
-    QString getCountyForId(int id);
-    QString getCityForId(int id);
     void createTemporaryPlates();
 
 private:

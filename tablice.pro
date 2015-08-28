@@ -20,7 +20,12 @@ SOURCES += src/tablice.cpp \
     src/datasource.cpp \
     src/plate.cpp \
     src/settings.cpp \
-    src/platemodel.cpp
+    src/platemodel.cpp \
+    src/abstractquery.cpp \
+    src/provincequery.cpp \
+    src/countyquery.cpp \
+    src/cityquery.cpp \
+    src/platecodequery.cpp
 
 OTHER_FILES += qml/tablice.qml \
     qml/cover/CoverPage.qml \
@@ -58,5 +63,10 @@ HEADERS += \
     src/datasource.h \
     src/plate.h \
     src/settings.h \
-    src/platemodel.h
+    src/platemodel.h \
+    src/abstractquery.h \
+    src/provincequery.h \
+    src/countyquery.h \
+    src/cityquery.h \
+    src/platecodequery.h
 

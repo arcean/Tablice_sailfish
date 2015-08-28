@@ -14,6 +14,10 @@
 #include "platemodel.h"
 #include "plate.h"
 #include "datasource.h"
+#include "provincequery.h"
+#include "countyquery.h"
+#include "cityquery.h"
+#include "platecodequery.h"
 
 void prepareApplicationInfo(QGuiApplication *sailfishApplication)
 {
@@ -48,22 +52,22 @@ PlateModel* createPlateModel(DataSource *dataSource)
 {
     PlateModel *plateModel = new PlateModel();
     Plate *plate;
+    ProvinceQuery provinceQuery;
+    CountyQuery countyQuery;
+    CityQuery cityQuery;
+    PlateCodeQuery plateCodeQuery;
 
-    qDebug() << "Trying to obtain number of entries...";
     int numberOfEntries = dataSource->getNumberOfEntries();
-    qDebug() << "Number of entries: " << numberOfEntries;
 
     for (int i = 0; i < numberOfEntries; i++) {
-        const QString city = dataSource->getCityForId(i);
-        const QString province = dataSource->getProvinceForId(i);
-        const QString county = dataSource->getCountyForId(i);
-        const QString plateCode = dataSource->getPlateCodeForId(i);
+        const QString city = cityQuery.getDataForId(i);
+        const QString province = provinceQuery.getDataForId(i);
+        const QString county = countyQuery.getDataForId(i);
+        const QString plateCode = plateCodeQuery.getDataForId(i);
         // FIXME: is category still needed ? Last plateCode is treated as category
         plate = new Plate(plateCode, city, county, province, plateCode);
         plateModel->addPlate(*plate);
-        qDebug() << "Loaded entry " <<  i << "/" << numberOfEntries;
     }
-    qDebug() << "returning...";
 
     return plateModel;
 }
@@ -77,10 +81,8 @@ int main(int argc, char *argv[])
     prepareSailfishApplication(sailfishApplication);
     prepareView(applicationView);
     QQmlContext *context = applicationView->rootContext();
-//    context->setContextProperty("platesModel",
-//    qmlRegisterType<Tablice>(ORGANIZATION_DOMAIN + ".tablice",1,0,"Tablice");
     DataSource dataSource;
-    PlateModel *plateModel = createPlateModel(&dataSource);// = new DataSource();
+    PlateModel *plateModel = createPlateModel(&dataSource);
     context->setContextProperty("plateModel", plateModel);
 
     applicationView->show();
