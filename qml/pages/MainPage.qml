@@ -8,7 +8,7 @@ Page {
     property string activeView: "list"
 
     onSearchStringChanged: listModel.update()
-    Component.onCompleted: listModel.update()
+//    Component.onCompleted: listModel.update()
 
     Loader {
         anchors.fill: parent
@@ -21,6 +21,7 @@ Page {
         width: mainPage.width
 
         PageHeader {
+            id: pageHeader
             title: "Tablice"
         }
 
@@ -39,7 +40,7 @@ Page {
     Component {
         id: listViewComponent
         SilicaListView {
-//            model: listModel
+            id: listView
             model: plateModel
             anchors.fill: parent
             currentIndex: -1 // otherwise currentItem will steal focus
@@ -49,6 +50,11 @@ Page {
                 height: headerContainer.height
                 Component.onCompleted: headerContainer.parent = header
             }
+
+            onMovementStarted: {
+                pageHeader.focus = true;
+            }
+
 
             delegate: BackgroundItem {
                 id: backgroundItem
@@ -113,28 +119,5 @@ Page {
         if (model.city === "")
             return "Powiat: " + model.county;
         return "Miasto: " + model.city;
-    }
-
-    ListModel {
-        id: listModel
-
-        // copied under creative commons license from Wikipedia
-        // http://en.wikipedia.org/wiki/List_of_sovereign_states
-        property variant countries: ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola",
-            "Taiwan"]
-
-        function update() {
-            var filteredCountries = countries.filter(function (country) { return country.toLowerCase().indexOf(searchString) !== -1 })
-            while (count > filteredCountries.length) {
-                remove(filteredCountries.length)
-            }
-            for (var index = 0; index < filteredCountries.length; index++) {
-                if (index < count) {
-                    setProperty(index, "text", filteredCountries[index])
-                } else {
-                    append({ "text": filteredCountries[index]})
-                }
-            }
-        }
     }
 }
